@@ -41,14 +41,11 @@ string_view Reader::peek() const
 
 void Reader::pop( uint64_t len )
 {
-  while (!is_finished()){
-    if (len == 0){
-      return;
-    }
-    --len;
-    stream_.erase(stream_.begin());
-    ++bytes_popped_;
+  if (len == 0 || is_finished()){
+    return;
   }
+  bytes_popped_ += len;
+  stream_.erase(stream_.begin(), stream_.begin() + len);
 }
 
 bool Reader::is_finished() const
