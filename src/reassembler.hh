@@ -1,6 +1,9 @@
 #pragma once
 
 #include "byte_stream.hh"
+#include <vector>
+#include <optional>
+#include <cassert>
 
 class Reassembler
 {
@@ -43,4 +46,12 @@ public:
 
 private:
   ByteStream output_;
+  uint64_t first_index_{};
+  uint64_t last_index_{};
+  uint64_t bytes_pending_{};
+  bool received_last_{};
+  std::vector<std::optional<char>> buffer_{};
+  void resize_buffer_();
+  bool is_valid_index_(uint64_t idx) const;
+  void check_rep_() const;
 };
