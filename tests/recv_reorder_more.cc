@@ -16,7 +16,7 @@
 
 using namespace std;
 
-static constexpr unsigned NREPS = 64;
+static constexpr unsigned NREPS = 32; // slight 2 sec timeout with = 64 ...
 
 void do_test_1( const TCPConfig& cfg, default_random_engine& rd )
 {

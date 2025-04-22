@@ -27,4 +27,9 @@ public:
 
 private:
   Reassembler reassembler_;
+  std::optional<Wrap32> zero_point_{};
+  uint64_t checkpoint_{}; //the first unassembled index
+  bool RST_{};
+  bool SYNCED_{};
+  std::optional<Wrap32> ackno_{};
 };
