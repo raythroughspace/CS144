@@ -5,6 +5,7 @@
 #include "tcp_sender_message.hh"
 
 #include <functional>
+#include <vector>
 
 class TCPSender
 {
@@ -42,4 +43,13 @@ private:
   ByteStream input_;
   Wrap32 isn_;
   uint64_t initial_RTO_ms_;
+  uint64_t RTO_ms_{initial_RTO_ms_}; // current RTO
+  uint64_t ms_since_RTO_{}; // amount of time since last retx timeout
+  bool is_timer_on_{}; 
+  std::vector<TCPSenderMessage> outstanding_{};
+  uint64_t checkpoint_{}; //largest ackno absolute number received
+  uint16_t window_size_{1};
+  uint64_t consecutive_retx_{};
+  uint64_t max_seqno_sent_{};
+  TCPSenderMessage last_segment_{};
 };
