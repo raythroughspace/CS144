@@ -1,0 +1,28 @@
+#pragma once
+
+#include "ethernet_header.hh"
+#include "parser.hh"
+
+#include <vector>
+
+struct EthernetFrame
+{
+  EthernetHeader header {};
+  std::vector<Ref<std::string>> payload {};
+
+  void parse( Parser& parser )
+  {
+    header.parse( parser );
+    parser.all_remaining( payload );
+  }
+
+  void serialize( Serializer& serializer ) const
+  {
+    header.serialize( serializer );
+    serializer.buffer( payload );
+  }
+
+  bool operator<(const EthernetFrame& other) const {
+    return header.to_string() < other.header.to_string();
+  }
+};
