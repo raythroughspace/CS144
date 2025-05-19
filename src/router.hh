@@ -4,6 +4,7 @@
 #include "network_interface.hh"
 
 #include <optional>
+#include <map>
 
 // \brief A router that has multiple network interfaces and
 // performs longest-prefix-match routing between them.
@@ -34,4 +35,7 @@ public:
 private:
   // The router's collection of network interfaces
   std::vector<std::shared_ptr<NetworkInterface>> interfaces_ {};
+
+  std::map<std::pair<uint32_t, uint8_t>, std::pair<std::optional<Address>, size_t>> routing_table_{};
+  std::optional<std::pair<std::optional<Address>, size_t>> find_route_(uint32_t dst);
 };
